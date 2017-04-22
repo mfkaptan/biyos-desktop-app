@@ -1,0 +1,22 @@
+{
+  "name": "biyos-desktop-app",
+  "version": "1.0.0",
+  "description": "Desktop app for biyos.net",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/mfkaptan/biyos-desktop-app",
+  "author": "mfkaptan",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "jquery": "^3.2.1",
+    "request-x-ray": "^0.1.4",
+    "tabletojson": "^0.4.0",
+    "x-ray": "^2.3.2"
+  }
+}
