@@ -11,7 +11,7 @@ $(document).ready(function() {
     $("#login-progress").text(msg)
   })
 
-  $("#sayacVeri").on("click", function (event, args) {
+  $("#sayacVeri").on("click", (event, args) => {
     ipcRenderer.send('sayac-veri')
   })
 
@@ -19,5 +19,26 @@ $(document).ready(function() {
     $("#suToplam").val(msg.suTotal)
     $("#kaloriToplam").val(msg.kaloriTotal)
     $("#kaloriOrt").val(msg.kaloriAvg)
+  })
+
+  $("#paylasimHesap").on("click", (event, args) => {
+    let data = {
+      fatura: parseFloat($("#fatura").val()),
+      suBirim: parseFloat($("#suBirim").val()),
+      gazBirim: parseFloat($("#gazBirim").val())
+    }
+
+    if (!data.fatura) {
+      alert("Fatura girip tekrar deneyin!")
+      return
+    }
+
+    ipcRenderer.send("paylasim-hesap", data)
+  })
+
+  ipcRenderer.on("paylasim-hesap", (event, msg) => {
+    $("#paylastir").val(msg.gaz)
+    $("#ortak").val(msg.ortak)
+    $("#aidat").val(msg.aidat)
   })
 })

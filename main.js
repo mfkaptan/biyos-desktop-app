@@ -71,7 +71,6 @@ const Biyos = {
 const uname = "mbkaptan@gmail.com",
   pass = "mbk20060"
 
-
 ipcMain.once("login", (e, args) => {
   const email = uname,
     pwd = pass
@@ -97,31 +96,49 @@ ipcMain.once("login", (e, args) => {
 /* Send sayac data */
 ipcMain.on("sayac-veri", (e, args) => {
   console.log("Veriler toplanıyor")
+  getAllSayac(e)
+})
 
-  Promise.all([getSayacTotal(Biyos.suSayac()), getSayacTotal(Biyos.kaloriSayac())])
-    .then(values => {
-      let sayacData = {
-        suTotal: values[0],
-        kaloriTotal: values[1],
-        kaloriAvg: values[1] / Biyos.DAIRE_COUNT,
+/* Send paylasim hesap */
+ipcMain.on("paylasim-hesap", (e, args) => {
+  console.log("Paylasim hesaplaniyor")
+  console.log(args)
+
+  getAllSayac(e)
+    .then(sayacData => {
+      let suDiff = (args.gazBirim - args.suBirim) * sayacData.suTotal
+      let sonFiyat = args.fatura - suDiff
+      let ortak = sonFiyat / 160. // (sonFiyat * (30 / 100) / 48)
+      let aidat = 200. - ortak
+
+      let paylasimData = {
+        gaz: sonFiyat.toFixed(2),
+        ortak: ortak.toFixed(2),
+        aidat: aidat.toFixed(2)
       }
-      e.sender.send("sayac-veri", sayacData)
+
+      e.sender.send("paylasim-hesap", paylasimData)
     })
 })
 
 function sumSayac(table) {
-    let total = tabletojson.convert('<table>' + table + '</table>')[0].sum('5');
+  let total = tabletojson.convert('<table>' + table + '</table>')[0].sum('5');
 
-    // data = data.map(function(entry) {
-    //   return {
-    //     block: entry['0'],
-    //     no: entry['1'],
-    //     name: entry['2'],
-    //     diff: entry['5']
-    //   }
-    // })
-    console.log(total)
-    return total;
+  console.log(total)
+  return total;
+}
+
+function getAllSayac(e) {
+  return Promise.all([getSayacTotal(Biyos.suSayac()), getSayacTotal(Biyos.kaloriSayac())])
+    .then(values => {
+      let sayacData = {
+        suTotal: values[0],
+        kaloriTotal: values[1],
+        kaloriAvg: (values[1] / Biyos.DAIRE_COUNT).toFixed(2)
+      }
+      e.sender.send("sayac-veri", sayacData)
+      return sayacData
+    })
 }
 
 function getSayacTotal(sayacUrl) {

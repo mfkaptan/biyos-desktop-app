@@ -5,7 +5,11 @@
   <meta charset="UTF-8">
   <title>Biyos Desktop App</title>
   <link rel="stylesheet" href="css/photon.min.css">
-
+  <style>
+    .btn {
+      width: 100%;
+    }
+  </style>
 </head>
 
 <body>
@@ -25,11 +29,11 @@
             <h4>Birim Fiyatlar</h4>
             <div class="form-group">
               <label for="gazBirim">Doğalgaz Birim</label>
-              <input name="gazBirim" id="gazBirim" type="number" class="form-control" value="12.5">
+              <input name="gazBirim" id="gazBirim" type="number" step="0.01" class="form-control" value="12.5">
             </div>
             <div class="form-group">
               <label for="suBirim">Su Birim</label>
-              <input name="suBirim" id="suBirim" type="number" class="form-control" value="6.25">
+              <input name="suBirim" id="suBirim" type="number" step="0.01" class="form-control" value="6.25">
             </div>
 
             <hr />
@@ -57,6 +61,37 @@
 
         <div class="pane">
           <div class="padded">
+            <h4>Paylaşım Hesaplama</h4>
+            <div class="form-group">
+              <label for="fatura">Doğal gaz faturası</label>
+              <input name="fatura" id="fatura" type="number" step="0.01" class="form-control">
+            </div>
+            <div class="form-actions">
+              <label for="paylasimHesap">Paylaşımı Hesapla</label>
+              <button id="paylasimHesap" class="btn btn-form btn-primary btn-large">
+                Paylaşımı Hesapla
+              </button>
+            </div>
+            <hr />
+            <h4>Paylaşım Verileri</h4>
+            <div class="form-group">
+              <label for="paylastir">Paylaştırılacak Doğal gaz</label>
+              <input name="paylastir" id="paylastir" type="number" step="0.01" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label for="ortak">Ortak Gider</label>
+              <input name="ortak" id="ortak" type="number" step="0.01" class="form-control" disabled>
+            </div>
+            <div class="form-group">
+              <label for="aidat">Aidat</label>
+              <input name="aidat" id="aidat" type="number" step="0.01" class="form-control" disabled>
+            </div>
+          </div>
+        </div>
+
+        <div class="pane">
+          <div class="padded">
+            <h4>Borç Tablosu</h4>
             <div class="form-group">
               <label for="fatura">Doğal gaz faturası</label>
               <input name="fatura" id="fatura" type="number" class="form-control">
