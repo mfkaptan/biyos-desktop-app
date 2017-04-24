@@ -4,13 +4,14 @@
   "description": "Desktop app for biyos.net",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "release": "electron-packager . BiyosApp"
   },
   "repository": "https://github.com/mfkaptan/biyos-desktop-app",
   "author": "mfkaptan",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "~1.6.2"
+    "electron": "^1.6.5"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
