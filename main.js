@@ -48,108 +48,35 @@ app.on('activate', function() {
   }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+const Biyos = require('./biyos')
+const biyos = new Biyos()
 
-const tabletojson = require('tabletojson');
-var Promise = require('bluebird');
-const request = require('request').defaults({ jar: true });
-const xray = require('x-ray')();
-const makeDriver = require('request-x-ray')
-const driver = makeDriver(request.defaults())
-xray.driver(driver)
-
-
-const Biyos = {
-  HOME: "https://app.biyos.net",
-  DAIRE_COUNT: 48,
-  login: () => { return Biyos.HOME + "/login.php" },
-  suSayac: () => { return Biyos.HOME + "/yonetim/sayaclar/sicaksu" },
-  kaloriSayac: () => { return Biyos.HOME + "/yonetim/sayaclar/kalorimetre" }
-}
-
-const uname = "mbkaptan@gmail.com",
-  pass = "mbk20060"
-
+/* Login */
 ipcMain.once("login", (e, args) => {
-  const email = uname,
-    pwd = pass
-  request.post({
-    url: Biyos.login(),
-    form: {
-      email: email,
-      password: pwd
-    }
-  }, function(error, response, body) {
-    if (error != null) {
-      console.log("Cannot login!")
-      e.sender.send("login", "Hata: Giriş yapılamadı!")
-      return;
-    }
-    Biyos.HOME += response.headers.location
-
-    e.sender.send("login", "Giriş yapıldı.")
-  })
+  console.log("Giriş yapılıyor")
+  biyos.login(e)
 })
-
 
 /* Send sayac data */
 ipcMain.on("sayac-veri", (e, args) => {
   console.log("Veriler toplanıyor")
-  getAllSayac(e)
+  biyos.getAllSayacTotal(e)
 })
 
 /* Send paylasim hesap */
 ipcMain.on("paylasim-hesap", (e, args) => {
   console.log("Paylasim hesaplaniyor")
-  console.log(args)
-
-  getAllSayac(e)
-    .then(sayacData => {
-      let suDiff = (args.gazBirim - args.suBirim) * sayacData.suTotal
-      let sonFiyat = args.fatura - suDiff
-      let ortak = sonFiyat / 160. // (sonFiyat * (30 / 100) / 48)
-      let aidat = 200. - ortak
-
-      let paylasimData = {
-        gaz: sonFiyat.toFixed(2),
-        ortak: ortak.toFixed(2),
-        aidat: aidat.toFixed(2)
-      }
-
-      e.sender.send("paylasim-hesap", paylasimData)
-    })
+  biyos.calculatePaylasim(e, args)
 })
 
-function sumSayac(table) {
-  let total = tabletojson.convert('<table>' + table + '</table>')[0].sum('5');
+/* Print apartman Borc */
+ipcMain.on("apartman-yazdir", (e, args) => {
+  console.log("Apartman borcu yazdırılıyor.")
+  biyos.printApartmanBorc(e, args)
+})
 
-  console.log(total)
-  return total;
-}
-
-function getAllSayac(e) {
-  return Promise.all([getSayacTotal(Biyos.suSayac()), getSayacTotal(Biyos.kaloriSayac())])
-    .then(values => {
-      let sayacData = {
-        suTotal: values[0],
-        kaloriTotal: values[1],
-        kaloriAvg: (values[1] / Biyos.DAIRE_COUNT).toFixed(2)
-      }
-      e.sender.send("sayac-veri", sayacData)
-      return sayacData
-    })
-}
-
-function getSayacTotal(sayacUrl) {
-  return Promise.promisify(xray(sayacUrl, 'table@html'))()
-    .then(sumSayac)
-}
-
-Array.prototype.sum = function(prop) {
-  let total = 0
-  for (let i = 0; i < this.length; i++) {
-    total += parseInt(this[i][prop])
-  }
-  return total
-}
+/* Print tekil Borc */
+ipcMain.on("tekil-yazdir", (e, args) => {
+  console.log("Tekil borç yazdırılıyor.")
+  biyos.printTekilBorc(e, args)
+})

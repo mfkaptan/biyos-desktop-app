@@ -17,6 +17,7 @@
     "jquery": "^3.2.1",
     "request-x-ray": "^0.1.4",
     "tabletojson": "^0.4.0",
-    "x-ray": "^2.3.2"
+    "x-ray": "^2.3.2",
+    "xlsx-populate": "^1.6.0"
   }
 }

@@ -9,6 +9,7 @@
     .btn {
       width: 100%;
     }
+
   </style>
 </head>
 
@@ -52,7 +53,7 @@
               <input name="kaloriOrt" id="kaloriOrt" class="form-control" placeholder="Sayaç verilerini girin" disabled>
             </div>
             <div class="form-actions">
-              <button id="sayacVeri" class="btn btn-form btn-primary btn-large pull-right">
+              <button id="sayacVeri" class="btn btn-form btn-default btn-large pull-right">
                 Verileri Göster
               </button>
             </div>
@@ -64,7 +65,7 @@
             <h4>Paylaşım Hesaplama</h4>
             <div class="form-group">
               <label for="fatura">Doğal gaz faturası</label>
-              <input name="fatura" id="fatura" type="number" step="0.01" class="form-control">
+              <input name="fatura" id="fatura" type="number" step="0.01" class="form-control" placeholder="Doğal gaz faturasını girin">
             </div>
             <div class="form-actions">
               <label for="paylasimHesap">Paylaşımı Hesapla</label>
@@ -91,10 +92,23 @@
 
         <div class="pane">
           <div class="padded">
-            <h4>Borç Tablosu</h4>
+            <h4>Apartman Borç Tablosu</h4>
+
             <div class="form-group">
-              <label for="fatura">Doğal gaz faturası</label>
-              <input name="fatura" id="fatura" type="number" class="form-control">
+              <label for="paylasim">Doğal gaz paylaşım linki</label>
+              <input name="paylasim" id="paylasim" type="number" class="form-control">
+            </div>
+            <div class="form-group">
+              <button id="apartmanYazdir" class="btn btn-form btn-primary btn-large">
+                Aylık Tablo Yazdır
+              </button>
+            </div>
+
+            <h4>Kişisel Borç Tablosu</h4>
+            <div class="form-group">
+              <button id="tekilYazdir" class="btn btn-form btn-primary btn-large">
+                Kişisel Tablo Yazdır
+              </button>
             </div>
           </div>
         </div>
@@ -110,7 +124,6 @@
 </script>
 <script>
   require('./renderer.js')
-
 </script>
 
 </html>
