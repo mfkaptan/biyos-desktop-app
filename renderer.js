@@ -45,6 +45,26 @@ $(document).ready(function() {
     $("#aidat").val(msg.aidat)
   })
 
+  // Otomatik Borclandir
+  $("#borclandir").on("click", (event, args) => {
+    let data = {
+      fatura: parseFloat($("#fatura").val()),
+      suBirim: parseFloat($("#suBirim").val()),
+      gazBirim: parseFloat($("#gazBirim").val())
+    }
+
+    if (!data.fatura) {
+      alert("Fatura girip tekrar deneyin!")
+      return
+    }
+
+    ipcRenderer.send("oto-borclandir", data)
+  })
+
+  ipcRenderer.on("oto-borclandir", (event, msg) => {
+
+  })
+
   // Apartman Yazdir
   $("#apartmanYazdir").on("click", (event, args) => {
     let data = {

@@ -53,7 +53,7 @@
               <input name="kaloriOrt" id="kaloriOrt" class="form-control" placeholder="Sayaç verilerini girin" disabled>
             </div>
             <div class="form-actions">
-              <button id="sayacVeri" class="btn btn-form btn-default btn-large pull-right">
+              <button id="sayacVeri" class="btn btn-form btn-default btn-large">
                 Verileri Göster
               </button>
             </div>
@@ -73,7 +73,9 @@
                 Paylaşımı Hesapla
               </button>
             </div>
+
             <hr />
+
             <h4>Paylaşım Verileri</h4>
             <div class="form-group">
               <label for="paylastir">Paylaştırılacak Doğal gaz</label>
@@ -87,35 +89,63 @@
               <label for="aidat">Aidat</label>
               <input name="aidat" id="aidat" type="number" step="0.01" class="form-control" disabled>
             </div>
+
+            <div class="form-group">
+              <button id="borclandir" class="btn btn-form btn-large btn-negative">
+                Otomatik Borçlandır
+              </button>
+            </div>
           </div>
         </div>
 
         <div class="pane">
           <div class="padded">
-            <h4>Apartman Borç Tablosu</h4>
-
+            <h4>Aylık Apartman Borç Tablosu</h4>
             <div class="form-group">
               <label for="paylasim">Doğal gaz paylaşım linki</label>
               <input name="paylasim" id="paylasim" type="number" class="form-control">
             </div>
             <div class="form-group">
+              <label for="apartmanYazdir">Aylık borç tablosu yazdır</label>
               <button id="apartmanYazdir" class="btn btn-form btn-primary btn-large">
                 Aylık Tablo Yazdır
               </button>
             </div>
 
+            <hr />
+
             <h4>Kişisel Borç Tablosu</h4>
+            <div class="radio">
+              <label>
+                <input type="radio" name="radios">
+                A blok
+              </label>
+              <label>
+                <input type="radio" name="radios">
+                B blok
+              </label>
+            </div>
+            <div class="form-group">
+              <input name="daireNo" id="daireNo" type="number" class="form-control" placeholder="Daire No">
+            </div>
             <div class="form-group">
               <button id="tekilYazdir" class="btn btn-form btn-primary btn-large">
                 Kişisel Tablo Yazdır
+              </button>
+            </div>
+
+            <hr />
+
+            <h4>Tüm kişisel borçlar tablosu</h4>
+            <div class="form-group">
+              <button id="tumYazdir" class="btn btn-form btn-primary btn-large">
+                Tüm Kişisel Borçları Yazdır
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
 </body>
 
 <script>
@@ -124,6 +154,7 @@
 </script>
 <script>
   require('./renderer.js')
+
 </script>
 
 </html>

@@ -86,7 +86,7 @@ function Biyos() {
   }
 
   this.calculatePaylasim = (e, args) => {
-    this.getAllSayacTotal(e)
+    return this.getAllSayacTotal(e)
       .then(sayacData => {
         let suDiff = (args.gazBirim - args.suBirim) * sayacData.suTotal
         let sonFiyat = args.fatura - suDiff
@@ -100,6 +100,7 @@ function Biyos() {
         }
 
         e.sender.send("paylasim-hesap", paylasimData)
+        return paylasimData
       })
   }
 
@@ -157,6 +158,13 @@ function Biyos() {
 
   this.printTekilBorc = (e, daire) => {
       this.getTekilBorc(daire)
+  }
+
+  this.otoBorclandir = (e, args) => {
+    this.calculatePaylasim(e, args)
+      .then(paylasimData => {
+
+      })
   }
 
   this.writeToXlsx = (title, aBlok, bBlok, fileName) => {

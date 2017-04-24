@@ -69,6 +69,12 @@ ipcMain.on("paylasim-hesap", (e, args) => {
   biyos.calculatePaylasim(e, args)
 })
 
+/* Otomatik borclandir */
+ipcMain.on("oto-borclandir", (e, args) => {
+  console.log("Otomatik borçlandırma başlatılıyor")
+  biyos.otoBorclandir(e, args)
+})
+
 /* Print apartman Borc */
 ipcMain.on("apartman-yazdir", (e, args) => {
   console.log("Apartman borcu yazdırılıyor.")
