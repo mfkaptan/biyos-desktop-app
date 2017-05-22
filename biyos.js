@@ -11,7 +11,7 @@ function Biyos() {
   this.HOME = "https://app.biyos.net"
   this.DAIRE_COUNT = 48
 
-  this.loginData = () => { return { email: "mbkaptan@gmail.com", password: "mbk20060" } }
+  this.loginData = () => { return { email: process.env.EMAIL, password: process.env.PASSWORD } }
   this.suSayac = () => { return this.HOME + "/yonetim/sayaclar/sicaksu" }
   this.kaloriSayac = () => { return this.HOME + "/yonetim/sayaclar/kalorimetre" }
   this.paylasimlar = () => { return this.HOME + "/raporlar/paylasimlar/" }
