@@ -1,3 +1,4 @@
+const env = require('env2')('./env.json');
 const tabletojson = require('tabletojson')
 const xlsx = require('xlsx-populate')
 const Promise = require('bluebird')
@@ -157,7 +158,7 @@ function Biyos() {
   }
 
   this.printTekilBorc = (e, daire) => {
-      this.getTekilBorc(daire)
+    this.getTekilBorc(daire)
   }
 
   this.otoBorclandir = (e, args) => {
