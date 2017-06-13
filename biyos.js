@@ -1,4 +1,5 @@
-const env = require('env2')('./env.json');
+const path = require('path')
+const env = require('env2')(path.join(__dirname, 'env.json'))
 const tabletojson = require('tabletojson')
 const xlsx = require('xlsx-populate')
 const Promise = require('bluebird')
@@ -169,7 +170,7 @@ function Biyos() {
   }
 
   this.writeToXlsx = (title, aBlok, bBlok, fileName) => {
-    xlsx.fromFileAsync("./aidat/template/aidat.xlsx")
+    xlsx.fromFileAsync(path.join(__dirname, "aidat", "template", "aidat.xlsx"))
       .then(workbook => {
         // Title
         workbook.sheet(0).cell("C1").value(title)
@@ -179,7 +180,7 @@ function Biyos() {
         workbook.sheet(0).range("B4:I27").value(aBlok)
         workbook.sheet(0).range("B32:I55").value(bBlok)
 
-        workbook.toFileAsync("./aidat/" + fileName + ".xlsx")
+        workbook.toFileAsync(path.join(__dirname, "aidat", "print", fileName + ".xlsx"))
       })
   }
 }
