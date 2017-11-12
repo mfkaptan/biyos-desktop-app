@@ -46,13 +46,23 @@ function Biyos() {
   this.getApartmanBorc = (paylasimUrl) => {
     paylasimUrl = paylasimUrl || 0
 
-    return Promise.all([this.getTable(this.suSayac()), this.getTable(this.paylasim(paylasimUrl))])
-      .then(values => {
+    if (paylasimUrl != 0) {
+      return Promise.all([this.getTable(this.suSayac()), this.getTable(this.paylasim(paylasimUrl))])
+        .then(values => {
+          return {
+            su: values[0],
+            paylasim: values[1].map((row) => {
+              return Object.values(row)
+            })
+          }
+        })
+    }
+
+    return this.getTable(this.suSayac())
+      .then(table => {
         return {
-          su: values[0],
-          paylasim: values[1].map((row) => {
-            return Object.values(row)
-          })
+          su: table,
+          paylasim: null
         }
       })
   }
@@ -128,11 +138,17 @@ function Biyos() {
           let name = su[i]['2']
           let diffSu = parseInt(su[i]['5'])
           let totalSu = diffSu * args.gazBirim
-          let diffKal = parseInt(paylasim[i][3].replace(",", ".")) || 0
-          let ortak = parseFloat(paylasim[i][7].replace(",", ".")) || 0
-          let totalKal = parseFloat(paylasim[i][8].replace(",", ".")) || 0
-          let aidat = 200. - ortak
-          let total = Math.ceil(totalSu + totalKal + ortak + aidat)
+          let aidat = 200.
+          let total = Math.ceil(totalSu + aidat)
+          let diffKal = 0, ortak = 0, totalKal = 0
+
+          if (paylasim != null) {
+            diffKal = parseInt(paylasim[i][3].replace(",", ".")) || 0
+            ortak = parseFloat(paylasim[i][7].replace(",", ".")) || 0
+            totalKal = parseFloat(paylasim[i][8].replace(",", ".")) || 0
+            aidat = 200. - ortak
+            total = Math.ceil(totalSu + totalKal + ortak + aidat)
+          }
 
           let daire = [name, diffSu, totalSu, diffKal, totalKal, ortak, aidat, total]
           let isimsiz = ["NO LU DAIRE", diffSu, totalSu, diffKal, totalKal, ortak, aidat, total]
