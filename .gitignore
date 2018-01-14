@@ -50,6 +50,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+*.zip
 
 # Yarn Integrity file
 .yarn-integrity
@@ -60,6 +61,9 @@ env.json
 
 # prints
 /aidat/print/*
+*.pdf
 
 # lock
 .~lock*
+
+BiyosApp-win32-x64/
